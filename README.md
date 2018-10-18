@@ -2,14 +2,29 @@
 一个简单的lumaDemo,在一个通过I2C连接到树莓派的OLED屏上输出几个字符。
 
 ## luma安装
-见 [luma.examples](https://github.com/rm-hull/luma.examples)
+见 [luma.examples](https://github.com/rm-hull/luma.examples)  
+安装依赖包
+
+    $ sudo usermod -a -G i2c,spi,gpio pi
+    $ sudo apt install python-dev python-pip libfreetype6-dev libjpeg-dev build-essential
+    $ sudo apt install libsdl-dev libportmidi-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev libsdl-image1.2-dev
+
+然后下载luma.examples文件夹  
+
+    $ git clone https://github.com/rm-hull/luma.examples.git
+    
+进入文件夹安装luma组件  
+
+    $ cd luma.examples
+    $ sudo -H pip install -e .
 
 ## oled屏幕的I2C连接
-树莓派                                                    OLED  
-GPIO.1(3V3)           --------------->           VCC    
-GPIO.6(0V)              --------------->           GND  
-GPIO.5(SCL.1)        --------------->           SCL  
-GPIO.3(SDA.1)       --------------->           SDA
+树莓派                                                OLED    
+PIN 1(3V3)           --------------->           VCC    
+PIN 3(SDA.1)       --------------->           SDA    
+PIN 5(SCL.1)        --------------->           SCL    
+PIN 6(0V)              --------------->           GND  
+
 
 <img src="gpio.png" width="400" alt="GPIO引脚图"/>
 
