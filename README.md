@@ -5,18 +5,51 @@
 见 [luma.examples](https://github.com/rm-hull/luma.examples)  
 安装依赖包
 
-    $ sudo usermod -a -G i2c,spi,gpio pi
-    $ sudo apt install python-dev python-pip libfreetype6-dev libjpeg-dev build-essential
-    $ sudo apt install libsdl-dev libportmidi-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev libsdl-image1.2-dev
+```
+$ sudo usermod -a -G i2c,spi,gpio pi
+$ sudo apt install python3-dev python3-pip python3-numpy libfreetype6-dev libjpeg-dev build-essential
+$ sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev
+```
 
 然后下载luma.examples文件夹  
 
-    $ git clone https://github.com/rm-hull/luma.examples.git
-    
+```
+$ git clone https://github.com/rm-hull/luma.examples.git
+```
+
 进入文件夹安装luma组件  
 
-    $ cd luma.examples
-    $ sudo -H pip install -e .
+```
+$ cd luma.examples
+$ sudo -H pip install -e .
+```
+
+## luma部署到Docker
+基于balenalib/rpi-raspbian镜像
+
+Dockerfile:
+
+```
+FROM balenalib/rpi-raspbian:latest
+ENTRYPOINT []
+
+RUN apt-get -q update
+RUN apt-get -q upgrade
+RUN apt install python3-dev python3-pip python3-numpy libfreetype6-dev libjpeg->
+RUN apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev>
+RUN pip install rpi.gpio
+
+RUN git clone https://github.com/rm-hull/luma.examples.git
+RUN cd luma.examples && pip install -e .
+
+CMD ["python3","luma.examples/examples/3d_box.py"]
+```
+
+**注：** 运行镜像时需要添加--privileged，否则无法访问GPIO
+
+生成镜像并运行后会执行自带的3d_box.py
+
+可自行修改Dockerfile文件嵌入自己的python程序，或者把这个作为基础镜像再生成新的镜像
 
 ## oled屏幕的I2C连接
 树莓派                                                OLED    
